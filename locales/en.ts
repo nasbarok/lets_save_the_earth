@@ -1,0 +1,277 @@
+
+
+export const en = {
+  "header": {
+    "title": "GLOBAL DEPOLLUTION SIMULATOR",
+    "subtitle": "The fate of the world is in your hands."
+  },
+  "dashboard": {
+    "date": "Date",
+    "playAria": "Play",
+    "pauseAria": "Pause",
+    "ecoPoints": "Eco Points",
+    "publicSupport": "Public Support",
+    "playtime": "Playtime",
+    "menu": "Menu",
+    "globalCO2": "Global CO₂",
+    "plasticWaste": "Plastic Waste",
+    "deforestation": "Deforestation",
+    "regionalData": "Regional Data",
+    "globalOverview": "Global Overview",
+    "healthIndex": "Health Index",
+    "avgHealth": "Avg. Health",
+    "regionalGDP": "Regional GDP",
+    "globalGDP": "Global GDP",
+    "population": "Population",
+    "totalPopulation": "Total Population",
+    "instability": "Instability",
+    "regionalCO2": "Regional CO₂",
+    "regionalPlastic": "Regional Plastic",
+    "energyConsumption": "Energy Consumption",
+    "renewableGen": "Renewable Gen.",
+    "nuclearGen": "Nuclear Gen.",
+    "thermalGen": "Thermal Gen.",
+    "globalWarming": "Global Warming",
+    "biodiversityIndex": "Biodiversity Index",
+    "globalConsumption": "Global Consumption",
+    "globalRenewable": "Global Renewable",
+    "globalNuclear": "Global Nuclear",
+    "globalThermal": "Global Thermal",
+    "nuclearThreat": "Nuclear Threat"
+  },
+  "actionsPanel": {
+    "actions": "Actions",
+    "technologies": "Technologies",
+    "actionsIn": "Actions in {regionName}",
+    "selectRegion": "Select a Region",
+    "selectRegionHint": "Select a region on the map to view available actions and technologies.",
+    "activeProjects": "Active Projects in {regionName}",
+    "completeBy": "Complete by",
+    "noActiveProjects": "No active projects."
+  },
+  "techPanel": {
+    "title": "Technologies",
+    "selectRegion": "Select a region on the map to view its technology trees.",
+    "titleIn": "Technologies in {regionName}",
+    "level": "Level",
+    "baseEffectiveness": "Base effectiveness.",
+    "upgradeTo": "Upgrade to Lvl",
+    "maxLevel": "Max Level Reached"
+  },
+  "eventLog": {
+    "title": "Global Feed"
+  },
+  "eventModal": {
+    "yourChoices": "Your Choices:",
+    "imageError": "Illustration could not be loaded.",
+    "okButton": "OK"
+  },
+  "introModal": {
+    "title": "Save the Earth!",
+    "objectiveTitle": "Your Objective",
+    "objectiveText": "Guide humanity, push back against collapse, and ensure its survival for as long as possible.",
+    "startButton": "Begin Simulation"
+  },
+  "gameEnd": {
+    "victoryTitle": "Victory!",
+    "gameOverTitle": "Game Over",
+    "victoryMessage": "You have successfully guided humanity to a sustainable future. The planet is saved!",
+    "gameOverMessage": "The world has succumbed to pollution. The ecosystem has collapsed, and hope is lost.",
+    "playAgainButton": "Play Again",
+    "tryAgainButton": "Try Again"
+  },
+  "menu": {
+    "title": "Game Menu",
+    "closeAria": "Close menu",
+    "newGame": "New Game",
+    "newGameButton": "New Game",
+    "newGameDescription": "Start from today with realistic challenges.",
+    "language": "Language",
+    "premium": "Premium",
+    "removeAds": "Remove Ads",
+    "removeAdsPrice": "for €1.00",
+    "saveSlots": "Save Slots",
+    "slot": "Slot",
+    "pollution": "Pollution",
+    "empty": "Empty",
+    "saveAria": "Save to slot",
+    "loadAria": "Load from slot"
+  },
+  "ads": {
+    "banner": "This is a simulated banner ad.",
+    "interstitialTitle": "A word from our sponsors",
+    "interstitialBody": "This is a simulated full-screen ad. In a real app, a video would play here.",
+    "closeIn": "You can close this in {seconds}s",
+    "closeNow": "Close Ad"
+  },
+  "worldMap": {
+    "ariaLabel": "World map showing pollution levels by continent"
+  },
+  "loader": {
+    "connecting": "Establishing connection to Gemini AI...",
+    "fetching": "Fetching real-time data for {regionName}...",
+    "fetchFailed": "Failed to get live data for {regionName}. Using standard values.",
+    "calibrating": "Calibrating simulation parameters...",
+    "fallback": "Could not fetch data. Using standard scenario...",
+    "finalizing": "Finalizing world state...",
+    "done": "Done.",
+    "initFailed": "Failed to initialize with live data."
+  },
+  "logs": {
+    "initSuccess": "Successfully initialized simulation with real-time world data from Gemini.",
+    "initFallback": "Could not fetch real-time data. Starting with standard realistic scenario.",
+    "simulationStarted": "Simulation started. Good luck.",
+    "removeAdsConfirm": "Ads have been permanently removed. Thank you for your support!",
+    "warPrefix": "WAR",
+    "warOngoing": "is ongoing",
+    "gameSaved": "Game saved to slot {slotId}.",
+    "gameLoaded": "Game loaded from slot {slotId}.",
+    "projectStarted": "Project started in {countryName}: {actionName}. Cost: {cost} EP.",
+    "cost": "Cost",
+    "techUpgraded": "Technology in {countryName}: {techName} Level {level}.",
+    "level": "Level",
+    "in": "in",
+    "projectCompleted": "Project completed: {actionName} in {countryName}.",
+    "actionTaken": "Action taken for \"{eventTitle}\": {choiceText}.",
+    "eventTimedOut": "The event \"{eventTitle}\" timed out. Consequences will follow.",
+    "eventAcknowledged": "Acknowledged event: \"{eventTitle}\".",
+    "gameOver": {
+      "pollution": "Global pollution has reached critical levels. The ecosystem is collapsing.",
+      "victory": "Congratulations! You have restored the planet's health.",
+      "support": "Public support has collapsed. Your mandate has been revoked.",
+      "population": "Humanity's population has dropped below a sustainable level. The future is bleak."
+    },
+    "unusualPatterns": "Unusual global patterns detected, stand by for analysis...",
+    "escalationEvent": "Rising geopolitical tensions are triggering a critical event...",
+    "newEvent": "New Event: {eventTitle}",
+    "patternsStabilized": "Global patterns stabilized. No major event occurred.",
+    "highTensions": "High tensions detected between {country1Name} and {country2Name}. Analysts are monitoring the situation.",
+    "and": "and",
+    "analystsMonitoring": "Analysts are monitoring the situation",
+    "warErupted": "WAR: {conflictName} has erupted between {country1Name} and {country2Name}!",
+    "tensionsDeescalated": "Tensions have de-escalated for now.",
+    "healthAlert": "Health alert in {countryName}!",
+    "extinctionPrefix": "EXTINCTION",
+    "the": "The",
+    "extinctionSuffix": "The {speciesName} has been declared extinct due to widespread {cause}.",
+    "nuclearStrike": "NUCLEAR STRIKE: {strikes} warheads have detonated over {targets}. The world holds its breath."
+  },
+  "healthCrisis": {
+    "warningTitle": "Alert: Health Declining in {countryName}",
+    "warningDesc": "The quality of life in {countryName} is deteriorating. Ambient pollution is causing minor but growing health problems, affecting productivity.",
+    "warningChoice1": "Launch prevention campaign",
+    "warningChoice2": "Monitor the situation",
+    "crisisTitle": "Health Crisis: Population Suffering in {countryName}",
+    "crisisDesc": "The health situation in {countryName} is critical. Hospitals are overwhelmed, and life expectancy is beginning to fall. The population is angry.",
+    "crisisChoice1": "Deploy emergency medical aid",
+    "crisisChoice2": "Impose pollution restrictions",
+    "emergencyTitle": "Humanitarian Emergency: Population Decline in {countryName}",
+    "emergencyDesc": "The population of {countryName} is in noticeable decline. Living conditions have become so precarious that mortality has skyrocketed. A major intervention is required.",
+    "emergencyChoice1": "Organize medical evacuations",
+    "emergencyChoice2": "Massively subsidize healthcare",
+    "collapseTitle": "Societal Collapse in {countryName}",
+    "collapseDesc": "Society in {countryName} has collapsed. Only a fraction of the population survives in extreme conditions. This is an unprecedented humanitarian disaster."
+  },
+  "cause": {
+    "pollution": "pollution",
+    "deforestation": "deforestation",
+    "globalWarming": "global warming",
+    "plastic": "plastic waste"
+  },
+  "countries": {
+    "NA": "North America",
+    "SA": "South America",
+    "EU": "Europe",
+    "AF": "Africa",
+    "AS": "Asia",
+    "OC": "Oceania"
+  },
+  "nuclearStrike": {
+    "title": "NUCLEAR DETONATION"
+  },
+  "actions": {
+    "renewable_investment": {
+      "name": "Renewable Energy Investment",
+      "description": "Fund large-scale solar, wind, and hydro projects."
+    },
+    "reforestation_drive": {
+      "name": "Reforestation Drive",
+      "description": "Plant millions of trees to create carbon sinks and restore habitats."
+    },
+    "ocean_cleanup": {
+      "name": "Ocean Cleanup Initiative",
+      "description": "Deploy fleets to remove plastic waste from major ocean gyres."
+    },
+    "awareness_campaign": {
+      "name": "Global Awareness Campaign",
+      "description": "Launch a media campaign to boost public support for green policies."
+    },
+    "nuclear_power_initiative": {
+      "name": "Nuclear Power Initiative",
+      "description": "Invest in next-generation nuclear reactors for clean, high-output energy."
+    },
+    "recycling_tech": {
+      "name": "Advanced Recycling Tech",
+      "description": "Develop and distribute technology for near-100% waste recycling."
+    },
+    "modernize_thermal_plants": {
+      "name": "Modernize Thermal Plants",
+      "description": "Retrofit existing fossil fuel plants with carbon capture technology."
+    },
+    "policy_summit": {
+      "name": "Global Policy Summit",
+      "description": "Host a summit to establish international environmental treaties."
+    },
+    "sustainable_agriculture": {
+      "name": "Sustainable Agriculture Program",
+      "description": "Promote farming techniques that reduce deforestation and improve soil health."
+    }
+  },
+  "tech": {
+    "co2": {
+      "name": "CO₂ & Energy Efficiency",
+      "description": "Improves renewable energy output and reduces emissions.",
+      "level1": "Basic carbon filters and improved solar panel efficiency.",
+      "level2": "Industrial-scale carbon capture and enhanced wind turbine design.",
+      "level3": "Development of next-generation nuclear and fusion technologies.",
+      "level4": "Breakthrough in direct air capture, making energy production nearly carbon-neutral."
+    },
+    "deforestation": {
+      "name": "Land Management & Reforestation",
+      "description": "Reduces deforestation and improves restoration efforts.",
+      "level1": "Satellite monitoring to combat illegal logging.",
+      "level2": "Genetically engineered fast-growing trees for rapid reforestation.",
+      "level3": "Advanced vertical farming techniques reduce the need for agricultural land.",
+      "level4": "Fully automated drone-based reforestation systems."
+    },
+    "waste": {
+      "name": "Waste & Plastic Recycling",
+      "description": "Improves efficiency of all plastic and waste reduction projects.",
+      "level1": "Mandatory national recycling programs.",
+      "level2": "Chemical recycling innovations that break down plastics into base components.",
+      "level3": "Development of biodegradable plastic alternatives.",
+      "level4": "Microbe-based systems that consume and neutralize plastic waste."
+    }
+  },
+  "tooltips": {
+    "co2": "Global CO₂ levels. High levels accelerate global warming.",
+    "plastic": "Plastic waste accumulation in oceans and landfills. Harms biodiversity.",
+    "deforestation": "Rate of forest loss. Reduces CO₂ absorption and biodiversity.",
+    "gdp": "Gross Domestic Product. A measure of economic output, generates eco points.",
+    "health": "Average public health. Low health leads to population decline and instability.",
+    "publicSupport": "Global public support. High support provides more eco points and stability.",
+    "energyConsumption": "Total energy demanded by the region/world annually.",
+    "energyRenewable": "Energy generated from renewable sources like solar and wind.",
+    "energyNuclear": "Energy generated from nuclear fission.",
+    "energyThermal": "Energy generated from burning fossil fuels (coal, gas). Major source of CO₂.",
+    "globalWarming": "Average temperature increase above pre-industrial levels. High levels cause disasters.",
+    "instability": "Risk of conflict and internal turmoil. High pollution and energy deficits increase it.",
+    "biodiversity": "Health of global ecosystems. Declines with pollution and warming, leading to extinctions.",
+    "population": "Population of {countryName}.",
+    "totalPopulation": "Total world population.",
+    "regionalCO2": "CO₂ emissions generated by {countryName}.",
+    "regionalPlastic": "Plastic waste generated by {countryName}.",
+    "regionalDeforestation": "Deforestation occurring in {countryName}.",
+    "nuclearThreat": "Global nuclear threat level. Increases with conflicts and low public support. High levels can trigger catastrophic events."
+  }
+};

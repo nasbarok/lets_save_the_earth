@@ -1,0 +1,251 @@
+
+{
+  "header": {
+    "title": "SIMULATEUR DE DÉPOLLUTION MONDIALE",
+    "subtitle": "Le destin du monde est entre vos mains."
+  },
+  "dashboard": {
+    "date": "Date",
+    "playAria": "Jouer",
+    "pauseAria": "Pause",
+    "ecoPoints": "Points Éco",
+    "publicSupport": "Soutien Public",
+    "playtime": "Temps de jeu",
+    "menu": "Menu",
+    "globalCO2": "CO₂ Mondial",
+    "plasticWaste": "Déchets Plastique",
+    "deforestation": "Déforestation",
+    "regionalData": "Données Régionales",
+    "globalOverview": "Aperçu Mondial",
+    "healthIndex": "Indice de Santé",
+    "avgHealth": "Santé Moy.",
+    "regionalGDP": "PIB Régional",
+    "globalGDP": "PIB Mondial",
+    "population": "Population",
+    "totalPopulation": "Population Totale",
+    "instability": "Instabilité",
+    "regionalCO2": "CO₂ Régional",
+    "regionalPlastic": "Plastique Régional",
+    "energyConsumption": "Consommation d'énergie",
+    "renewableGen": "Gén. Renouvelable",
+    "nuclearGen": "Gén. Nucléaire",
+    "thermalGen": "Gén. Thermique",
+    "globalWarming": "Réchauffement Climatique",
+    "biodiversityIndex": "Indice de Biodiversité",
+    "globalConsumption": "Consommation Mondiale",
+    "globalRenewable": "Renouvelable Mondial",
+    "globalNuclear": "Nucléaire Mondial",
+    "globalThermal": "Thermique Mondial"
+  },
+  "actionsPanel": {
+    "actions": "Actions",
+    "technologies": "Technologies",
+    "actionsIn": "Actions en {regionName}",
+    "selectRegion": "Sélectionner une Région",
+    "selectRegionHint": "Sélectionnez une région sur la carte pour voir les actions et technologies disponibles.",
+    "activeProjects": "Projets Actifs en {regionName}",
+    "completeBy": "Terminé d'ici",
+    "noActiveProjects": "Aucun projet actif."
+  },
+  "techPanel": {
+    "title": "Technologies",
+    "selectRegion": "Sélectionnez une région sur la carte pour voir ses arbres technologiques.",
+    "titleIn": "Technologies en {regionName}",
+    "level": "Niveau",
+    "baseEffectiveness": "Efficacité de base.",
+    "upgradeTo": "Améliorer au Nv.",
+    "maxLevel": "Niveau Max Atteint"
+  },
+  "eventLog": {
+    "title": "Flux Mondial"
+  },
+  "eventModal": {
+    "yourChoices": "Vos Choix :",
+    "imageError": "L'illustration n'a pas pu être chargée.",
+    "okButton": "OK"
+  },
+  "gameEnd": {
+    "victoryTitle": "Victoire !",
+    "gameOverTitle": "Partie Terminée",
+    "victoryMessage": "Vous avez guidé l'humanité vers un avenir durable avec succès. La planète est sauvée !",
+    "gameOverMessage": "Le monde a succombé à la pollution. L'écosystème s'est effondré et tout espoir est perdu.",
+    "playAgainButton": "Rejouer",
+    "tryAgainButton": "Réessayer"
+  },
+  "menu": {
+    "title": "Menu du Jeu",
+    "closeAria": "Fermer le menu",
+    "newGame": "Nouvelle Partie",
+    "newGameButton": "Nouvelle Partie",
+    "newGameDescription": "Commencez aujourd'hui avec des défis réalistes.",
+    "language": "Langue",
+    "saveSlots": "Emplacements de Sauvegarde",
+    "slot": "Emplacement",
+    "pollution": "Pollution",
+    "empty": "Vide",
+    "saveAria": "Sauvegarder dans l'emplacement",
+    "loadAria": "Charger depuis l'emplacement"
+  },
+  "worldMap": {
+    "ariaLabel": "Carte du monde montrant les niveaux de pollution par continent"
+  },
+  "loader": {
+    "connecting": "Connexion à l'IA Gemini...",
+    "fetching": "Récupération des données en temps réel pour {regionName}...",
+    "fetchFailed": "Échec de la récupération des données pour {regionName}. Utilisation des valeurs standard.",
+    "calibrating": "Calibration des paramètres de simulation...",
+    "fallback": "Impossible de récupérer les données. Utilisation du scénario standard...",
+    "finalizing": "Finalisation de l'état du monde...",
+    "done": "Terminé.",
+    "initFailed": "Échec de l'initialisation avec les données en direct."
+  },
+  "logs": {
+    "initSuccess": "Simulation initialisée avec succès avec les données mondiales en temps réel de Gemini.",
+    "initFallback": "Impossible de récupérer les données en temps réel. Démarrage avec un scénario réaliste standard.",
+    "warPrefix": "GUERRE",
+    "warOngoing": "est en cours",
+    "gameSaved": "Partie sauvegardée dans l'emplacement {slotId}.",
+    "gameLoaded": "Partie chargée depuis l'emplacement {slotId}.",
+    "projectStarted": "Projet démarré en {countryName}: {actionName}. Coût : {cost} EP.",
+    "cost": "Coût",
+    "techUpgraded": "Technologie en {countryName}: {techName} Niveau {level}.",
+    "level": "Niveau",
+    "in": "en",
+    "projectCompleted": "Projet terminé : {actionName} en {countryName}.",
+    "actionTaken": "Action entreprise pour « {eventTitle} » : {choiceText}.",
+    "eventTimedOut": "L'événement « {eventTitle} » a expiré. Des conséquences vont suivre.",
+    "eventAcknowledged": "Événement pris en compte : « {eventTitle} ».",
+    "gameOver": {
+      "pollution": "La pollution mondiale a atteint des niveaux critiques. L'écosystème s'effondre.",
+      "victory": "Félicitations ! Vous avez restauré la santé de la planète.",
+      "support": "Le soutien public s'est effondré. Votre mandat a été révoqué.",
+      "population": "La population de l'humanité est tombée en dessous d'un niveau durable. L'avenir est sombre."
+    },
+    "unusualPatterns": "Anomalies mondiales détectées, analyse en cours...",
+    "newEvent": "Nouvel Événement : {eventTitle}",
+    "patternsStabilized": "Les schémas mondiaux se sont stabilisés. Aucun événement majeur.",
+    "highTensions": "Fortes tensions détectées entre {country1Name} et {country2Name}. Les analystes surveillent la situation.",
+    "and": "et",
+    "analystsMonitoring": "Les analystes surveillent la situation",
+    "warErupted": "GUERRE : {conflictName} a éclaté entre {country1Name} et {country2Name} !",
+    "tensionsDeescalated": "Les tensions se sont apaisées pour le moment.",
+    "healthAlert": "Alerte sanitaire en {countryName} !",
+    "extinctionPrefix": "EXTINCTION",
+    "the": "L'",
+    "extinctionSuffix": "L'espèce {speciesName} a été déclarée éteinte en raison d'une {cause} généralisée."
+  },
+  "healthCrisis": {
+    "warningTitle": "Alerte : Santé en Baisse en {countryName}",
+    "warningDesc": "La qualité de vie en {countryName} se détériore. La pollution ambiante cause des problèmes de santé mineurs mais croissants, affectant la productivité.",
+    "warningChoice1": "Lancer une campagne de prévention",
+    "warningChoice2": "Surveiller la situation",
+    "crisisTitle": "Crise Sanitaire : Population en Souffrance en {countryName}",
+    "crisisDesc": "La situation sanitaire en {countryName} est critique. Les hôpitaux sont débordés et l'espérance de vie commence à chuter. La population est en colère.",
+    "crisisChoice1": "Déployer une aide médicale d'urgence",
+    "crisisChoice2": "Imposer des restrictions de pollution",
+    "emergencyTitle": "Urgence Humanitaire : Déclin de la Population en {countryName}",
+    "emergencyDesc": "La population de {countryName} est en déclin notable. Les conditions de vie sont devenues si précaires que la mortalité a explosé. Une intervention majeure est requise.",
+    "emergencyChoice1": "Organiser des évacuations médicales",
+    "emergencyChoice2": "Subventionner massivement la santé",
+    "collapseTitle": "Effondrement Sociétal en {countryName}",
+    "collapseDesc": "La société en {countryName} s'est effondrée. Seule une fraction de la population survit dans des conditions extrêmes. C'est une catastrophe humanitaire sans précédent."
+  },
+  "cause": {
+    "pollution": "pollution",
+    "deforestation": "déforestation",
+    "globalWarming": "réchauffement climatique",
+    "plastic": "déchets plastiques"
+  },
+  "countries": {
+    "NA": "Amérique du Nord",
+    "SA": "Amérique du Sud",
+    "EU": "Europe",
+    "AF": "Afrique",
+    "AS": "Asie",
+    "OC": "Océanie"
+  },
+  "actions": {
+    "renewable_investment": {
+      "name": "Investissement Énergies Renouvelables",
+      "description": "Financer des projets solaires, éoliens et hydrauliques à grande échelle."
+    },
+    "reforestation_drive": {
+      "name": "Campagne de Reforestation",
+      "description": "Planter des millions d'arbres pour créer des puits de carbone et restaurer les habitats."
+    },
+    "ocean_cleanup": {
+      "name": "Initiative de Nettoyage des Océans",
+      "description": "Déployer des flottes pour retirer les déchets plastiques des principaux gyres océaniques."
+    },
+    "awareness_campaign": {
+      "name": "Campagne de Sensibilisation Mondiale",
+      "description": "Lancer une campagne médiatique pour renforcer le soutien public aux politiques vertes."
+    },
+    "nuclear_power_initiative": {
+      "name": "Initiative Énergie Nucléaire",
+      "description": "Investir dans des réacteurs nucléaires de nouvelle génération pour une énergie propre à haut rendement."
+    },
+    "recycling_tech": {
+      "name": "Technologie de Recyclage Avancée",
+      "description": "Développer et distribuer une technologie pour un recyclage des déchets proche de 100%."
+    },
+    "modernize_thermal_plants": {
+      "name": "Moderniser les Centrales Thermiques",
+      "description": "Adapter les centrales à combustibles fossiles existantes avec une technologie de capture du carbone."
+    },
+    "policy_summit": {
+      "name": "Sommet sur les Politiques Mondiales",
+      "description": "Organiser un sommet pour établir des traités environnementaux internationaux."
+    },
+    "sustainable_agriculture": {
+      "name": "Programme d'Agriculture Durable",
+      "description": "Promouvoir des techniques agricoles qui réduisent la déforestation et améliorent la santé des sols."
+    }
+  },
+  "tech": {
+    "co2": {
+      "name": "CO₂ & Efficacité Énergétique",
+      "description": "Améliore la production d'énergie renouvelable et réduit les émissions.",
+      "level1": "Filtres à carbone de base et efficacité améliorée des panneaux solaires.",
+      "level2": "Capture du carbone à l'échelle industrielle et conception améliorée des éoliennes.",
+      "level3": "Développement de technologies nucléaires et de fusion de nouvelle génération.",
+      "level4": "Percée dans la capture directe de l'air, rendant la production d'énergie quasi neutre en carbone."
+    },
+    "deforestation": {
+      "name": "Gestion des Terres & Reforestation",
+      "description": "Réduit la déforestation et améliore les efforts de restauration.",
+      "level1": "Surveillance par satellite pour lutter contre l'exploitation forestière illégale.",
+      "level2": "Arbres génétiquement modifiés à croissance rapide pour une reforestation accélérée.",
+      "level3": "Les techniques avancées d'agriculture verticale réduisent le besoin de terres agricoles.",
+      "level4": "Systèmes de reforestation entièrement automatisés par drones."
+    },
+    "waste": {
+      "name": "Recyclage des Déchets & Plastiques",
+      "description": "Améliore l'efficacité de tous les projets de réduction des déchets et des plastiques.",
+      "level1": "Programmes nationaux de recyclage obligatoires.",
+      "level2": "Innovations en recyclage chimique qui décomposent les plastiques en composants de base.",
+      "level3": "Développement d'alternatives plastiques biodégradables.",
+      "level4": "Systèmes à base de microbes qui consomment et neutralisent les déchets plastiques."
+    }
+  },
+  "tooltips": {
+    "co2": "Niveaux mondiaux de CO₂. Des niveaux élevés accélèrent le réchauffement climatique.",
+    "plastic": "Accumulation de déchets plastiques dans les océans et les décharges. Nuit à la biodiversité.",
+    "deforestation": "Taux de perte de forêts. Réduit l'absorption de CO₂ et la biodiversité.",
+    "gdp": "Produit Intérieur Brut. Une mesure de la production économique, génère des points éco.",
+    "health": "Santé publique moyenne. Une santé faible entraîne un déclin de la population et de l'instabilité.",
+    "publicSupport": "Soutien public mondial. Un soutien élevé fournit plus de points éco et de stabilité.",
+    "energyConsumption": "Énergie totale demandée par la région/le monde annuellement.",
+    "energyRenewable": "Énergie générée à partir de sources renouvelables comme le solaire et l'éolien.",
+    "energyNuclear": "Énergie générée par la fission nucléaire.",
+    "energyThermal": "Énergie générée par la combustion de combustibles fossiles (charbon, gaz). Source majeure de CO₂.",
+    "globalWarming": "Augmentation de la température moyenne au-dessus des niveaux préindustriels. Des niveaux élevés provoquent des catastrophes.",
+    "instability": "Risque de conflit et de troubles internes. Une pollution élevée et des déficits énergétiques l'augmentent.",
+    "biodiversity": "Santé des écosystèmes mondiaux. Décline avec la pollution et le réchauffement, menant à des extinctions.",
+    "population": "Population de {countryName}.",
+    "totalPopulation": "Population mondiale totale.",
+    "regionalCO2": "Émissions de CO₂ générées par {countryName}.",
+    "regionalPlastic": "Déchets plastiques générés par {countryName}.",
+    "regionalDeforestation": "Déforestation ayant lieu en {countryName}."
+  }
+}
