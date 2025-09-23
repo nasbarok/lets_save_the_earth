@@ -3,8 +3,15 @@ import { GoogleGenAI, Type } from "@google/genai";
 import type { GeminiGameEvent, Country, GeminiConflict, GeminiExtinctSpecies, Language, GeminiNuclearEvent, GeminiIntroNarration } from '../types';
 import { COUNTRIES } from '../constants/countries';
 import { createInitialState } from '../constants/state';
+const geminiApiKey =
+    (typeof import.meta !== 'undefined' && import.meta.env.VITE_GEMINI_API_KEY) ||
+    (typeof process !== 'undefined' && (process as any).env?.GEMINI_API_KEY); // fallback éventuel côté Node
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+if (!geminiApiKey) {
+    throw new Error("Clé API Gemini manquante : définissez VITE_GEMINI_API_KEY dans .env");
+}
+
+const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
 const FETCH_CONTINENT_TIMEOUT_MS = 20000;
 

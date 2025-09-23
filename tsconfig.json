@@ -7,12 +7,15 @@
     "lib": [
       "ES2022",
       "DOM",
-      "DOM.Iterable"
+      "DOM.Iterable",
+      "ESNext"
     ],
     "skipLibCheck": true,
     "types": [
-      "node"
+      "node",
+      "vite/client"
     ],
+    "include": ["src"],
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "moduleDetection": "force",
