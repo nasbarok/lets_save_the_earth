@@ -712,7 +712,7 @@ const Game: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto p-2 sm:p-4 font-sans relative">
+    <div className="w-full max-w-full mx-auto p-1 sm:p-2 font-sans relative overflow-x-hidden">
       {isInitializing && <InitializationLoader progress={loaderStatus.progress} message={loaderStatus.message} />}
       {gameState.isGameOver && <GameEndModal won={gameState.gameWon} onRestart={handleNewGame} />}
       {isMenuOpen && <GameMenuModal onClose={() => handleMenuToggle(false)} onNewGame={handleNewGame} onSaveGame={handleSaveGame} onLoadGame={handleLoadGame} saveSlots={saveSlots} gameInProgress={gameHasStarted} currentLanguage={language} onLanguageChange={handleLanguageChange} hasPaidToRemoveAds={gameState.hasPaidToRemoveAds} onRemoveAds={handleRemoveAds} />}
@@ -722,7 +722,7 @@ const Game: React.FC = () => {
       
       <Header />
       {!gameState.hasPaidToRemoveAds && <BannerAd />}
-      <main className="flex flex-col lg:grid lg:grid-cols-3 gap-4 mt-4 lg:flex-grow lg:min-h-0">
+      <main className="flex flex-col lg:grid lg:grid-cols-3 gap-2 mt-2 lg:flex-grow lg:min-h-0">
         <div className="lg:col-span-2 flex flex-col gap-4 lg:min-h-0">
           <Dashboard gameState={gameState} onMenuToggle={() => handleMenuToggle(true)} selectedCountry={selectedCountry} isPaused={isPaused} onPauseToggle={handlePauseToggle} onSpeedChange={handleSpeedChange} />
           <div className="lg:flex-grow lg:min-h-0">
