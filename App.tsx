@@ -581,7 +581,7 @@ const Game: React.FC = () => {
                 const category = eventData.category.toUpperCase();
                 console.log('🖼️ DEBUG Images - Category:', category);
                 console.log('🖼️ DEBUG Images - Available IMAGES:', Object.keys(IMAGES));
-                const imageUrl =  pickImage((category as keyof typeof IMAGES)) ?? pickImage('DEFAULT');
+                const imageUrl = pickImage((category as keyof typeof IMAGES)) ?? pickImage('DEFAULT');
                 console.log('🖼️ DEBUG Images - Selected imageUrl:', imageUrl);
                 console.log('🖼️ DEBUG Images - imageUrl type:', typeof imageUrl);
                 setGameState(prev => ({
@@ -613,53 +613,89 @@ const Game: React.FC = () => {
     }, [gameState.ticksUntilNextEvent, isGenerating, isPaused, gameState.isGameOver, language, gameState.activeEvent, gameState.nuclearThreatLevel, addToLog]);
 
     useEffect(() => {
-        gameState.countries.forEach(country => {
+        // Constantes pour le système de cooldown
+        const HEALTH_CRISIS_COOLDOWN = 120; // 4 minutes entre crises par pays
+        const MIN_CRISIS_DURATION = 24;     // 48 secondes avant escalade
+        const MAX_SIMULTANEOUS_CRISES = 2;  // Maximum 2 crises simultanées
+
+        // Compter les crises actuelles
+        const currentHealthCrises = gameState.countries.filter(c => c.healthCrisisLevel > 0).length;
+
+        gameState.countries.forEach((country, index) => {
             if (gameState.activeEvent) return;
+
+            // Calculer le tick actuel (approximatif)
+            const currentTick = Math.floor(gameState.playtimeSeconds / 2);
+
+            // Vérifier le cooldown
+            const ticksSinceLastCrisis = currentTick - (country.healthCrisisLastTick || 0);
+            if (ticksSinceLastCrisis < HEALTH_CRISIS_COOLDOWN) return;
+
+            // Calculer le niveau de crise
             let crisisLevel = 0;
-            if (country.healthIndex < 60) crisisLevel = 1;
-            if (country.healthIndex < 45) crisisLevel = 2;
-            if (country.healthIndex < 30) crisisLevel = 3;
-            if (country.healthIndex < 15) crisisLevel = 4;
+            if (country.healthIndex < 25) crisisLevel = 1;
+            if (country.healthIndex < 15) crisisLevel = 2;
+            if (country.healthIndex < 8) crisisLevel = 3;
+            if (country.healthIndex < 3) crisisLevel = 4;
 
+            // Vérifier si on peut déclencher une nouvelle crise
             if (crisisLevel > country.healthCrisisLevel) {
-                const {
-                    title,
-                    description,
-                    baseEffects,
-                    choices
-                } = createHealthCrisisAlert(t(country.name), crisisLevel, t);
+                // Limitation globale : pas plus de 2 crises simultanées
+                if (currentHealthCrises >= MAX_SIMULTANEOUS_CRISES) return;
 
-                let imageUrl = pickImage('DEFAULT');
-                if (crisisLevel === 1) imageUrl = pickImage('HEALTH_WARNING');
-                if (crisisLevel === 2) imageUrl = pickImage('HEALTH_CRISIS');
-                if (crisisLevel === 3) imageUrl = pickImage('HEALTH_EMERGENCY');
-                if (crisisLevel === 4) imageUrl = pickImage('HEALTH_COLLAPSE');
+                // Vérifier la tendance (santé en baisse)
+                const healthTrend = country.healthIndex - (country.previousHealthIndex || country.healthIndex);
+                const isHealthDeclining = healthTrend < -1; // Santé en baisse
 
-                console.log('🏥 DEBUG Health Crisis - Level:', crisisLevel);
-                console.log('🏥 DEBUG Health Crisis - Selected imageUrl:', imageUrl);
-                console.log('🏥 DEBUG Health Crisis - imageUrl type:', typeof imageUrl);
+                // Vérifier la durée dans le niveau actuel
+                const ticksInLevel = country.ticksInCurrentHealthLevel || 0;
+                const hasBeenInLevelLongEnough = ticksInLevel >= MIN_CRISIS_DURATION;
 
-                setGameState(prev => ({
-                    ...prev,
-                    countries: prev.countries.map(c => c.id === country.id ? {
-                        ...c,
-                        healthCrisisLevel: crisisLevel
-                    } : c),
-                    activeEvent: {
-                        id: `health-${country.id}-${crisisLevel}`,
+                // Déclencher la crise seulement si les conditions sont remplies
+                if (isHealthDeclining || hasBeenInLevelLongEnough || crisisLevel >= 3) {
+                    const {
                         title,
                         description,
-                        imageUrl,
-                        choices,
                         baseEffects,
-                    },
-                    eventTimer: choices ? EVENT_TIMER_SECONDS : null,
-                }));
+                        choices
+                    } = createHealthCrisisAlert(t(country.name), crisisLevel, t);
 
-                addToLog('logs.healthAlert', true, {countryName: t(country.name)});
+                    let imageUrl = pickImage('DEFAULT');
+                    if (crisisLevel === 1) imageUrl = pickImage('HEALTH_WARNING');
+                    if (crisisLevel === 2) imageUrl = pickImage('HEALTH_CRISIS');
+                    if (crisisLevel === 3) imageUrl = pickImage('HEALTH_EMERGENCY');
+                    if (crisisLevel === 4) imageUrl = pickImage('HEALTH_COLLAPSE');
+
+                    console.log('🏥 DEBUG Health Crisis - Level:', crisisLevel);
+                    console.log('🏥 DEBUG Health Crisis - Cooldown OK:', ticksSinceLastCrisis);
+                    console.log('🏥 DEBUG Health Crisis - Global limit OK:', currentHealthCrises);
+
+                    setGameState(prev => ({
+                        ...prev,
+                        countries: prev.countries.map(c => c.id === country.id ? {
+                            ...c,
+                            healthCrisisLevel: crisisLevel,
+                            healthCrisisLastTick: currentTick,
+                            ticksInCurrentHealthLevel: 0 // Reset counter
+                        } : c),
+                        activeEvent: {
+                            id: `health-${country.id}-${crisisLevel}`,
+                            title,
+                            description,
+                            imageUrl,
+                            choices,
+                            baseEffects,
+                        },
+                        eventTimer: choices ? EVENT_TIMER_SECONDS : null,
+                    }));
+
+                    addToLog('logs.healthAlert', true, {countryName: t(country.name)});
+                    return; // Une seule crise à la fois
+                }
             }
         });
-    }, [gameState.countries, t, addToLog, gameState.activeEvent]);
+    }, [gameState.countries, gameState.playtimeSeconds, t, addToLog, gameState.activeEvent]);
+
 
     useEffect(() => {
         const checkConflicts = async () => {

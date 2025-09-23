@@ -1,5 +1,3 @@
-
-
 import type { GameState, Country, Conflict } from '../types';
 import { PollutantType } from '../types';
 import { COUNTRIES } from './countries';
@@ -22,8 +20,8 @@ export const POLLUTANT_CONVERSION_FACTORS = {
 } as const;
 
 export const createInitialState = (
-  isRealistic = false,
-  overrideCountries?: Country[]
+    isRealistic = false,
+    overrideCountries?: Country[]
 ): GameState => {
   let countries: Country[];
   let date: Date;
@@ -32,7 +30,7 @@ export const createInitialState = (
   const defaultTech = { tech: { co2: 0, deforestation: 0, waste: 0 } };
 
   if (overrideCountries) {
-    countries = overrideCountries.map(c => ({...c, ...defaultTech, instability: 0}));
+    countries = overrideCountries.map(c => ({ ...c, ...defaultTech, instability: 0 }));
     date = new Date();
   } else if (isRealistic) {
     date = new Date();
@@ -44,26 +42,36 @@ export const createInitialState = (
       { id: 'AS', name: 'countries.AS', pollutants: { co2: 85, plastic: 80, deforestation: 65 }, coords: { x: 700, y: 180 }, population: 4_750_000_000, populationGrowthRate: 0.008, gdp: 40, gdpGrowthRate: 0.045, healthIndex: 62, healthCrisisLevel: 0, energy: { consumption: 15500, production: { renewable: 4800, nuclear: 900, thermal: 9800 } }, ...defaultTech, instability: 0 },
       { id: 'OC', name: 'countries.OC', pollutants: { co2: 40, plastic: 45, deforestation: 30 }, coords: { x: 850, y: 380 }, population: 45_000_000, populationGrowthRate: 0.011, gdp: 2, gdpGrowthRate: 0.015, healthIndex: 81, healthCrisisLevel: 0, energy: { consumption: 620, production: { renewable: 180, nuclear: 0, thermal: 440 } }, ...defaultTech, instability: 0 },
     ];
-    activeConflicts = INITIAL_CONFLICTS.map(c => ({...c, startDate: new Date(), name: c.name, description: c.description }));
+    activeConflicts = INITIAL_CONFLICTS.map(c => ({ ...c, startDate: new Date(), name: c.name, description: c.description }));
   } else {
     date = new Date(2024, 0, 1);
     countries = typeof structuredClone === 'function'
-      ? structuredClone(COUNTRIES)
-      : JSON.parse(JSON.stringify(COUNTRIES));
+        ? structuredClone(COUNTRIES)
+        : JSON.parse(JSON.stringify(COUNTRIES));
   }
-  
+
+  // ✅ Calcul de l’instabilité + initialisation des champs de suivi santé
   countries = countries.map(c => {
     const avgPollution = (c.pollutants.co2 + c.pollutants.plastic + c.pollutants.deforestation) / 3;
     const totalProduction = c.energy.production.renewable + c.energy.production.nuclear + c.energy.production.thermal;
     const energyDeficit = c.energy.consumption > 0 ? Math.max(0, (c.energy.consumption - totalProduction) / c.energy.consumption) : 0;
     const instability = Math.min(100, Math.round(avgPollution / 2 + energyDeficit * 50));
-    return { ...c, instability };
+
+    return {
+      ...c,
+      instability,
+      // Champs santé — valeurs par défaut si absents
+      healthCrisisLevel: c.healthCrisisLevel ?? 0,
+      healthCrisisLastTick: c.healthCrisisLastTick ?? 0,
+      ticksInCurrentHealthLevel: c.ticksInCurrentHealthLevel ?? 0,
+      previousHealthIndex: c.previousHealthIndex ?? c.healthIndex,
+    };
   });
 
   const totalPollution =
-    countries.reduce((sum, c) => sum + c.pollutants.co2 + c.pollutants.plastic + c.pollutants.deforestation, 0)
-    / (countries.length * 3);
-    
+      countries.reduce((sum, c) => sum + c.pollutants.co2 + c.pollutants.plastic + c.pollutants.deforestation, 0)
+      / (countries.length * 3);
+
   const initialPopulation = countries.reduce((sum, c) => sum + c.population, 0);
 
   return {

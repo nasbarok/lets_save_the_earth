@@ -47,6 +47,9 @@ export interface Country {
     energy: Energy;
     tech: Tech; // Technology levels
     instability: number; // 0-100, risk of conflict
+    healthCrisisLastTick?: number;        // Dernier tick où une crise a eu lieu
+    ticksInCurrentHealthLevel?: number;   // Nombre de ticks dans le niveau actuel
+    previousHealthIndex?: number;         // HealthIndex du tick précédent
 }
 
 export interface ActiveAction {
