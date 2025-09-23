@@ -4,6 +4,9 @@ import type { GeminiIntroNarration } from '../types';
 import { IMAGES } from '../assets/images';
 import { useLocalization } from '../hooks/useLocalization';
 
+console.log('🎯 DEBUG - IntroModal IMAGES loaded:', IMAGES);
+console.log('🎯 DEBUG - IntroModal IMAGES keys:', Object.keys(IMAGES));
+console.log('🎯 DEBUG - IntroModal Sample image (DEFAULT):', IMAGES.DEFAULT);
 interface IntroModalProps {
   narration: GeminiIntroNarration;
   onClose: () => void;
