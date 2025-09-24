@@ -15,7 +15,6 @@
       "node",
       "vite/client"
     ],
-    "include": ["src"],
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -28,5 +27,6 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  "include": ["src", "types.ts", "index.tsx", "vite.config.ts", "constants", "components", "context", "hooks", "locales", "services", "App.tsx"]
 }
