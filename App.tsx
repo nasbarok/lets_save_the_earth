@@ -21,6 +21,7 @@ import Header from './components/Header';
 import Dashboard from './components/Dashboard';
 import GlobalStats from './components/dashboard/GlobalStats';
 import GlobalOverview from './components/dashboard/GlobalOverview';
+import CollapsibleSection from './components/CollapsibleSection';
 import ActionsPanel from './components/ActionsPanel';
 import EventLog from './components/EventLog';
 import GameEndModal from './components/GameEndModal';
@@ -943,8 +944,16 @@ const Game: React.FC = () => {
                                   onSelectCountry={handleCountrySelect}/>
                     </div>
                     <div className="flex flex-col gap-4">
-                      <GlobalStats gameState={gameState} />
-                      <GlobalOverview gameState={gameState} selectedCountry={selectedCountry} />
+                      <div data-testid="global-stats-section">
+                        <CollapsibleSection title={t('dashboard.globalStats')}>
+                          <GlobalStats gameState={gameState} />
+                        </CollapsibleSection>
+                      </div>
+                      <div data-testid="global-overview-section">
+                        <CollapsibleSection title={t('dashboard.globalOverview')}>
+                          <GlobalOverview gameState={gameState} selectedCountry={selectedCountry} />
+                        </CollapsibleSection>
+                      </div>
                     </div>
                 </div>
                 <div className="lg:col-span-1 flex flex-col gap-4 lg:min-h-0">

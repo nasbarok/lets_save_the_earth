@@ -237,3 +237,17 @@ export const WasteTechIcon: React.FC<{className?: string}> = ({className}) => (
     <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0011.667 0l3.182-3.182m0 0v4.992m0 0h-4.992m-4.993 0l-3.181-3.182a8.25 8.25 0 0111.667 0l-3.182 3.182" />
   </svg>
 );
+
+// Chevron Down
+export const ChevronDownIcon: React.FC<{className?: string}> = ({className}) => (
+  <svg {...iconProps} className={className || "w-5 h-5"}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+  </svg>
+);
+
+// Chevron Right
+export const ChevronRightIcon: React.FC<{className?: string}> = ({className}) => (
+  <svg {...iconProps} className={className || "w-5 h-5"}>
+    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+  </svg>
+);
