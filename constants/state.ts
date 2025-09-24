@@ -102,4 +102,12 @@ export const createInitialState = (
   };
 };
 
-export const GAME_SPEED_MS = 2000;
+// ✅ VITESSES DE JEU OPTIMISÉES POUR PLUS D'IMPACT
+export const GAME_SPEED_MS = 2000; // Vitesse de base (x1)
+
+// Multiplicateurs de vitesse plus agressifs
+export const GAME_SPEED_MULTIPLIERS = {
+  1: 1,    // x1 = 2000ms (vitesse normale)
+  2: 4,    // x2 = 500ms (4x plus rapide)
+  3: 8     // x3 = 250ms (8x plus rapide)
+} as const;

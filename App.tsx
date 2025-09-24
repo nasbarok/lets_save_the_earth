@@ -39,6 +39,7 @@ import {createHealthCrisisAlert, EVENT_TIMER_SECONDS} from './constants/events';
 import {
     createInitialState,
     GAME_SPEED_MS,
+    GAME_SPEED_MULTIPLIERS,
     MIN_EVENT_TICKS,
     MAX_EVENT_TICKS,
     CO2_STABILITY_INDEX,
@@ -285,6 +286,7 @@ const Game: React.FC = () => {
                 applyEventEffects(choice.effects);
                 addToLog('logs.actionTaken', true, {eventTitle: gameState.activeEvent.title, choiceText: choice.text});
             }
+            // ✅ VITESSE PRÉSERVÉE : gameSpeed n'est pas modifié ici, donc la vitesse est maintenue
             setGameState(prev => ({...prev, activeEvent: null, eventTimer: null}));
         }
     };
@@ -501,13 +503,47 @@ const Game: React.FC = () => {
                     };
 
                     const avgPollution = (newPollutants.co2 + newPollutants.plastic + newPollutants.deforestation) / 3;
-                    let healthChange = (50 - avgPollution) * 0.05;
-
+                    
+                    // ✅ NOUVEAU SYSTÈME D'INDICE DE SANTÉ AVEC INERTIE
+                    // Vérifier d'abord si le pays est en conflit
+                    const isInConflict = prev.activeConflicts.some(con => con.involvedCountryIds.includes(c.id));
+                    
+                    // Calcul de l'indice de santé cible basé sur la pollution
+                    const targetHealthIndex = Math.max(10, Math.min(90, 100 - avgPollution * 0.8));
+                    
+                    // Facteur d'inertie : plus l'écart est grand, plus le changement est rapide
+                    const healthDifference = targetHealthIndex - c.healthIndex;
+                    const inertieFactor = Math.abs(healthDifference) > 20 ? 0.08 : 0.03; // Changement plus rapide si écart important
+                    
+                    // Application de l'inertie avec amortissement
+                    let healthChange = healthDifference * inertieFactor;
+                    
+                    // Facteurs modificateurs
+                    // Conflit : impact négatif sur la santé
+                    if (isInConflict) {
+                        healthChange -= 0.5;
+                    }
+                    
+                    // Bonus pour faible pollution (effet positif renforcé)
+                    if (avgPollution < 30) {
+                        healthChange += 0.2;
+                    }
+                    
+                    // Malus pour pollution très élevée (effet négatif renforcé)
+                    if (avgPollution > 70) {
+                        healthChange -= 0.3;
+                    }
+                    
+                    // Application du changement avec limites
                     let newHealthIndex = Math.max(0, Math.min(100, c.healthIndex + healthChange));
+                    
+                    // Mise à jour des champs de suivi pour le système de crises
+                    const previousHealthIndex = c.healthIndex;
+                    const ticksInCurrentLevel = c.healthCrisisLevel === 0 ? 0 : (c.ticksInCurrentHealthLevel || 0) + 1;
 
                     totalCO2Index += newPollutants.co2;
 
-                    const isInConflict = prev.activeConflicts.some(con => con.involvedCountryIds.includes(c.id));
+                    // Calcul de l'instabilité (isInConflict déjà défini plus haut)
                     let newInstability = c.instability;
                     if (isInConflict) {
                         newInstability = Math.min(100, newInstability + 0.5);
@@ -521,7 +557,10 @@ const Game: React.FC = () => {
                         population: newPopulation,
                         pollutants: newPollutants,
                         healthIndex: newHealthIndex,
-                        instability: newInstability
+                        instability: newInstability,
+                        // ✅ Nouveaux champs pour le suivi de l'évolution de la santé
+                        previousHealthIndex,
+                        ticksInCurrentHealthLevel: ticksInCurrentLevel
                     };
                 });
 
@@ -548,12 +587,12 @@ const Game: React.FC = () => {
                     ticksUntilConflictCheck: prev.ticksUntilConflictCheck - 1,
                     ticksUntilExtinctionCheck: prev.ticksUntilExtinctionCheck - 1,
                     ticksUntilNextInterstitial: prev.ticksUntilNextInterstitial > 0 ? prev.ticksUntilNextInterstitial - 1 : 0,
-                    playtimeSeconds: prev.playtimeSeconds + (GAME_SPEED_MS / 1000) / prev.gameSpeed,
+                    playtimeSeconds: prev.playtimeSeconds + (GAME_SPEED_MS / 1000) / GAME_SPEED_MULTIPLIERS[prev.gameSpeed],
                     globalWarming: newGlobalWarming,
                     biodiversityIndex: newBiodiversityIndex,
                 };
             });
-        }, GAME_SPEED_MS / gameState.gameSpeed);
+        }, GAME_SPEED_MS / GAME_SPEED_MULTIPLIERS[gameState.gameSpeed]);
 
         return () => clearTimeout(gameTick);
     }, [gameState, isPaused, isInitializing, introModalData, t, addToLog]);
@@ -613,10 +652,10 @@ const Game: React.FC = () => {
     }, [gameState.ticksUntilNextEvent, isGenerating, isPaused, gameState.isGameOver, language, gameState.activeEvent, gameState.nuclearThreatLevel, addToLog]);
 
     useEffect(() => {
-        // Constantes pour le système de cooldown
-        const HEALTH_CRISIS_COOLDOWN = 120; // 4 minutes entre crises par pays
-        const MIN_CRISIS_DURATION = 24;     // 48 secondes avant escalade
-        const MAX_SIMULTANEOUS_CRISES = 2;  // Maximum 2 crises simultanées
+        // ✅ SYSTÈME DE CRISES SANITAIRES ÉQUILIBRÉ
+        const HEALTH_CRISIS_COOLDOWN = 180; // 6 minutes entre crises par pays (plus réaliste)
+        const MIN_CRISIS_DURATION = 36;     // 72 secondes avant escalade (plus de temps pour réagir)
+        const MAX_SIMULTANEOUS_CRISES = 3;  // Maximum 3 crises simultanées (plus de dynamisme)
 
         // Compter les crises actuelles
         const currentHealthCrises = gameState.countries.filter(c => c.healthCrisisLevel > 0).length;
@@ -631,28 +670,33 @@ const Game: React.FC = () => {
             const ticksSinceLastCrisis = currentTick - (country.healthCrisisLastTick || 0);
             if (ticksSinceLastCrisis < HEALTH_CRISIS_COOLDOWN) return;
 
-            // Calculer le niveau de crise
+            // ✅ SEUILS DE CRISES AJUSTÉS POUR PLUS DE RÉALISME
             let crisisLevel = 0;
-            if (country.healthIndex < 25) crisisLevel = 1;
-            if (country.healthIndex < 15) crisisLevel = 2;
-            if (country.healthIndex < 8) crisisLevel = 3;
-            if (country.healthIndex < 3) crisisLevel = 4;
+            if (country.healthIndex < 35) crisisLevel = 1; // Alerte précoce (était 25)
+            if (country.healthIndex < 25) crisisLevel = 2; // Crise modérée (était 15)
+            if (country.healthIndex < 15) crisisLevel = 3; // Urgence sanitaire (était 8)
+            if (country.healthIndex < 8) crisisLevel = 4;  // Effondrement (était 3)
 
             // Vérifier si on peut déclencher une nouvelle crise
             if (crisisLevel > country.healthCrisisLevel) {
-                // Limitation globale : pas plus de 2 crises simultanées
+                // Limitation globale : pas plus de 3 crises simultanées
                 if (currentHealthCrises >= MAX_SIMULTANEOUS_CRISES) return;
 
+                // ✅ CONDITIONS DE DÉCLENCHEMENT AMÉLIORÉES
                 // Vérifier la tendance (santé en baisse)
                 const healthTrend = country.healthIndex - (country.previousHealthIndex || country.healthIndex);
-                const isHealthDeclining = healthTrend < -1; // Santé en baisse
+                const isHealthDeclining = healthTrend < -0.5; // Seuil plus sensible (était -1)
 
                 // Vérifier la durée dans le niveau actuel
                 const ticksInLevel = country.ticksInCurrentHealthLevel || 0;
                 const hasBeenInLevelLongEnough = ticksInLevel >= MIN_CRISIS_DURATION;
 
-                // Déclencher la crise seulement si les conditions sont remplies
-                if (isHealthDeclining || hasBeenInLevelLongEnough || crisisLevel >= 3) {
+                // Probabilité de déclenchement basée sur la gravité
+                const crisisProbability = crisisLevel >= 3 ? 0.8 : (crisisLevel >= 2 ? 0.4 : 0.2);
+                const shouldTriggerByChance = Math.random() < crisisProbability;
+
+                // Déclencher la crise si les conditions sont remplies
+                if (isHealthDeclining || hasBeenInLevelLongEnough || shouldTriggerByChance) {
                     const {
                         title,
                         description,
