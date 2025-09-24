@@ -16,6 +16,7 @@ export const fr = {
     "globalCO2": "CO₂ Mondial",
     "plasticWaste": "Déchets Plastique",
     "deforestation": "Déforestation",
+    "globalStats": "Statistiques Globales",
     "regionalData": "Données Régionales",
     "globalOverview": "Aperçu Mondial",
     "healthIndex": "Indice de Santé",

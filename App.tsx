@@ -19,9 +19,6 @@ import {PollutantType} from './types';
 import {saveGame, loadGame, getSaveSlotsInfo} from './services/saveLoadService';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
-import GlobalStats from './components/dashboard/GlobalStats';
-import GlobalOverview from './components/dashboard/GlobalOverview';
-import CollapsibleSection from './components/CollapsibleSection';
 import ActionsPanel from './components/ActionsPanel';
 import EventLog from './components/EventLog';
 import GameEndModal from './components/GameEndModal';
@@ -936,24 +933,12 @@ const Game: React.FC = () => {
             <main className="flex flex-col lg:grid lg:grid-cols-3 gap-2 mt-2 lg:flex-grow lg:min-h-0">
                 <div className="lg:col-span-2 flex flex-col gap-4 lg:min-h-0">
                     <Dashboard gameState={gameState} onMenuToggle={() => handleMenuToggle(true)}
-                               isPaused={isPaused} onPauseToggle={handlePauseToggle}
+                               selectedCountry={selectedCountry} isPaused={isPaused} onPauseToggle={handlePauseToggle}
                                onSpeedChange={handleSpeedChange}/>
                     <div className="lg:flex-grow lg:min-h-0">
                         <WorldMap countries={gameState.countries} activeConflicts={gameState.activeConflicts}
                                   selectedCountryId={gameState.selectedCountryId}
                                   onSelectCountry={handleCountrySelect}/>
-                    </div>
-                    <div className="flex flex-col gap-4">
-                      <div data-testid="global-stats-section">
-                        <CollapsibleSection title={t('dashboard.globalStats')}>
-                          <GlobalStats gameState={gameState} />
-                        </CollapsibleSection>
-                      </div>
-                      <div data-testid="global-overview-section">
-                        <CollapsibleSection title={t('dashboard.globalOverview')}>
-                          <GlobalOverview gameState={gameState} selectedCountry={selectedCountry} />
-                        </CollapsibleSection>
-                      </div>
                     </div>
                 </div>
                 <div className="lg:col-span-1 flex flex-col gap-4 lg:min-h-0">
