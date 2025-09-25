@@ -929,11 +929,11 @@ const Game: React.FC = () => {
             {introModalData && <IntroModal narration={introModalData} onClose={handleCloseIntroModal}/>}
             {showInterstitial && <InterstitialAd onClose={handleCloseInterstitial}/>}
 
-            <Header/>
+            <Header onMenuToggle={() => handleMenuToggle(true)} />
             {!gameState.hasPaidToRemoveAds && <BannerAd/>}
             <main className="flex flex-col lg:grid lg:grid-cols-3 gap-2 mt-2 lg:flex-grow lg:min-h-0">
                 <div className="lg:col-span-2 flex flex-col gap-4 lg:min-h-0">
-                    <MainControls gameState={gameState} onMenuToggle={() => handleMenuToggle(true)}
+                    <MainControls gameState={gameState}
                                isPaused={isPaused} onPauseToggle={handlePauseToggle}
                                onSpeedChange={handleSpeedChange}/>
                     <div className="lg:flex-grow lg:min-h-0">

@@ -6,13 +6,12 @@ import { Tooltip, StatCard } from './utils';
 
 interface MainControlsProps {
   gameState: GameState;
-  onMenuToggle: () => void;
   isPaused: boolean;
   onPauseToggle: () => void;
   onSpeedChange: (speed: 1 | 2 | 3) => void;
 }
 
-const MainControls: React.FC<MainControlsProps> = ({ gameState, onMenuToggle, isPaused, onPauseToggle, onSpeedChange }) => {
+const MainControls: React.FC<MainControlsProps> = ({ gameState, isPaused, onPauseToggle, onSpeedChange }) => {
   const { t, language } = useLocalization();
   const { date, ecoPoints, publicSupport, gameSpeed, playtimeSeconds, activeConflicts } = gameState;
 
@@ -62,11 +61,6 @@ const MainControls: React.FC<MainControlsProps> = ({ gameState, onMenuToggle, is
         <StatCard icon={<EcoPointsIcon />} label={t('dashboard.ecoPoints')} value={ecoPoints.toLocaleString(language)} colorClass="bg-green-500/20 text-green-400" />
         <StatCard icon={<SupportIcon />} label={t('dashboard.publicSupport')} value={`${publicSupport.toFixed(1)}%`} colorClass="bg-sky-500/20 text-sky-400" tooltipText={tooltips.publicSupport}/>
         <StatCard icon={<ClockIcon />} label={t('dashboard.playtime')} value={formatPlaytime(playtimeSeconds)} colorClass="bg-indigo-500/20 text-indigo-400" />
-
-        <button onClick={onMenuToggle} className="bg-slate-800 p-3 rounded-lg flex items-center justify-center space-x-3 shadow-md hover:bg-slate-700 transition-colors">
-            <div className="p-2 rounded-full bg-slate-700 text-slate-300"><MenuIcon /></div>
-            <span className="font-bold text-white">{t('dashboard.menu')}</span>
-        </button>
       </div>
     </div>
   );
