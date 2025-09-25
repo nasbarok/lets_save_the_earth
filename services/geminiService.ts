@@ -76,6 +76,7 @@ export const fetchRealTimeData = async (
     t: (key: string, replacements?: { [key: string]: string | number }) => string,
     language: Language
 ): Promise<Country[] | null> => {
+    console.log("GEMINI_INTERACTION: Calling fetchRealTimeData");
     try {
         const realisticState = createInitialState(true);
         const updatedCountries: Country[] = [];
@@ -96,6 +97,8 @@ The response must be in ${promptLanguage}.
 - Energy figures are in annual TWh.
 - Health Index is a score from 0-100.`;
 
+            console.log(`GEMINI_INTERACTION: fetchRealTimeData prompt for ${regionName}:`, prompt);
+
             try {
                 const resultPromise = ai.models.generateContent({
                   model: 'gemini-2.5-flash',
@@ -109,6 +112,7 @@ The response must be in ${promptLanguage}.
                 const result = await fetchWithTimeout(resultPromise, FETCH_CONTINENT_TIMEOUT_MS) as any;
                 
                 const jsonStr = result.text.trim();
+                console.log(`GEMINI_INTERACTION: fetchRealTimeData response for ${regionName}:`, jsonStr);
                 const data = JSON.parse(jsonStr);
 
                 const existingCountry = realisticState.countries.find(c => c.id === country.id);
@@ -119,7 +123,7 @@ The response must be in ${promptLanguage}.
                     });
                 }
             } catch (continentError) {
-                console.warn(`Could not fetch data for ${regionName}:`, continentError);
+                console.error(`GEMINI_INTERACTION_ERROR: fetchRealTimeData for ${regionName}:`, continentError);
                 updateLoader(t('loader.fetchFailed', { regionName }), progress);
                 const existingCountry = realisticState.countries.find(c => c.id === country.id);
                 if (existingCountry) {
@@ -131,7 +135,7 @@ The response must be in ${promptLanguage}.
         return updatedCountries;
 
     } catch (error) {
-        console.error("Error fetching real-time world data:", error);
+        console.error("GEMINI_INTERACTION_ERROR: Global error in fetchRealTimeData:", error);
         updateLoader("loader.initFailed", 90, true);
         return null;
     }
@@ -236,6 +240,7 @@ const nuclearEventSchema = {
 };
 
 export const generateIntroNarration = async (language: Language, context: string): Promise<GeminiIntroNarration | null> => {
+    console.log("GEMINI_INTERACTION: Calling generateIntroNarration");
     try {
         const promptLanguage = languageMap[language];
         const prompt = `You are a narrator for a tense geopolitical and environmental simulation game. Your tone is serious and grim.
@@ -250,6 +255,8 @@ Follow these strict instructions for the narration:
 
 Provide a JSON object with the specified schema. The response text (description) must be in ${promptLanguage}.`;
 
+        console.log("GEMINI_INTERACTION: generateIntroNarration prompt:", prompt);
+
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
@@ -260,22 +267,26 @@ Provide a JSON object with the specified schema. The response text (description)
         });
 
         const jsonStr = response.text.trim();
+        console.log("GEMINI_INTERACTION: generateIntroNarration response:", jsonStr);
         return JSON.parse(jsonStr) as GeminiIntroNarration;
     } catch (error) {
-        console.error("Error generating intro narration:", error);
+        console.error("GEMINI_INTERACTION_ERROR: Error in generateIntroNarration:", error);
         return null;
     }
 };
 
 export const generateConflictEvent = async (country1Name: string, country2Name: string, year: number, language: Language, context: string): Promise<GeminiConflict | null> => {
+    console.log("GEMINI_INTERACTION: Calling generateConflictEvent");
     try {
         const promptLanguage = languageMap[language];
         const prompt = `You are a world conflict simulator for a geopolitical and environmental game. The year is ${year}.
-A conflict is breaking out between two regions based on the current in-game situation:
+A conflict is breaking out between two regions based on the current in--game situation:
 ${context}
 Generate a realistic conflict scenario based on these conditions. The cause should be plausibly linked to resource scarcity, climate migration, or environmental tensions.
 Provide a JSON object with the specified schema.
 The response text (title, name, description) must be in ${promptLanguage}.`;
+
+        console.log("GEMINI_INTERACTION: generateConflictEvent prompt:", prompt);
 
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
@@ -287,15 +298,17 @@ The response text (title, name, description) must be in ${promptLanguage}.`;
         });
 
         const jsonStr = response.text.trim();
+        console.log("GEMINI_INTERACTION: generateConflictEvent response:", jsonStr);
         return JSON.parse(jsonStr) as GeminiConflict;
     } catch (error) {
-        console.error("Error generating conflict event:", error);
+        console.error("GEMINI_INTERACTION_ERROR: Error in generateConflictEvent:", error);
         return null;
     }
 };
 
 
 export const generateRandomEvent = async (language: Language, nuclearThreatLevel: number): Promise<GeminiGameEvent | null> => {
+  console.log("GEMINI_INTERACTION: Calling generateRandomEvent");
   try {
     const promptLanguage = languageMap[language];
     let prompt = `You are a world event simulator for a pollution control game. Generate a random global event that impacts pollution, economics, and society. The event must be interactive and impactful.
@@ -320,6 +333,8 @@ The event MUST be a **geopolitical escalation** related to this threat. Examples
 Focus on events related to **global warming consequences** (e.g., extreme weather, melting ice caps, climate refugees) or **geopolitical conflict** (e.g., resource wars, border disputes over water, international tensions).`;
     }
 
+    console.log("GEMINI_INTERACTION: generateRandomEvent prompt:", prompt);
+
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
         contents: prompt,
@@ -330,20 +345,24 @@ Focus on events related to **global warming consequences** (e.g., extreme weathe
       });
   
       const jsonStr = response.text.trim();
+      console.log("GEMINI_INTERACTION: generateRandomEvent response:", jsonStr);
       return JSON.parse(jsonStr) as GeminiGameEvent;
 
   } catch (error) {
-    console.error("Error generating random event:", error);
+    console.error("GEMINI_INTERACTION_ERROR: Error in generateRandomEvent:", error);
     return null;
   }
 };
 
 export const generateExtinctSpecies = async (cause: string, language: Language): Promise<GeminiExtinctSpecies | null> => {
+    console.log("GEMINI_INTERACTION: Calling generateExtinctSpecies");
     try {
         const promptLanguage = languageMap[language];
         const prompt = `For a simulation game, provide the name of a plausible animal species that has just gone extinct due to the primary cause of "${cause}". This can be a real species currently in critical danger or a realistic fictional one. The response must be a JSON object with the specified schema.
 The species name must be in ${promptLanguage}.`;
         
+        console.log("GEMINI_INTERACTION: generateExtinctSpecies prompt:", prompt);
+
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
@@ -354,15 +373,17 @@ The species name must be in ${promptLanguage}.`;
           });
       
           const jsonStr = response.text.trim();
+          console.log("GEMINI_INTERACTION: generateExtinctSpecies response:", jsonStr);
           return JSON.parse(jsonStr) as GeminiExtinctSpecies;
 
     } catch (error) {
-        console.error("Error generating extinct species:", error);
+        console.error("GEMINI_INTERACTION_ERROR: Error in generateExtinctSpecies:", error);
         return null;
     }
 };
 
 export const generateNuclearEvent = async (language: Language): Promise<GeminiNuclearEvent | null> => {
+    console.log("GEMINI_INTERACTION: Calling generateNuclearEvent");
     try {
         const promptLanguage = languageMap[language];
         const prompt = `You are a grim narrator in a simulation game. A limited nuclear exchange has just occurred due to escalating global tensions.
@@ -370,6 +391,8 @@ Provide a JSON object describing this event according to the schema.
 The description must be a single, somber sentence.
 The response text must be in ${promptLanguage}.`;
         
+        console.log("GEMINI_INTERACTION: generateNuclearEvent prompt:", prompt);
+
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: prompt,
@@ -380,10 +403,11 @@ The response text must be in ${promptLanguage}.`;
           });
       
           const jsonStr = response.text.trim();
+          console.log("GEMINI_INTERACTION: generateNuclearEvent response:", jsonStr);
           return JSON.parse(jsonStr) as GeminiNuclearEvent;
 
     } catch (error) {
-        console.error("Error generating nuclear event:", error);
+        console.error("GEMINI_INTERACTION_ERROR: Error in generateNuclearEvent:", error);
         return null;
     }
 };
