@@ -109,13 +109,13 @@ const InfoPanels: React.FC<InfoPanelsProps> = ({gameState, selectedCountry, sele
         nuclearThreat: t('tooltips.nuclearThreat'),
     };
     const REGION_ALIASES: Record<string, string> = {
-        'africa': 'africa', 'afrique': 'africa',
-        'europe': 'europe',
-        'asia': 'asia', 'asie': 'asia',
-        'north america': 'north_america', 'amerique du nord': 'north_america', 'amérique du nord': 'north_america',
-        'south america': 'south_america', 'amerique du sud': 'south_america', 'amérique du sud': 'south_america',
-        'oceania': 'oceania', 'oceanie': 'oceania', 'océanie': 'oceania',
-        'antarctica': 'antarctica', 'antarctique': 'antarctica',
+        'africa': 'africa', 'afrique': 'africa', 'countries.af': 'africa',
+        'europe': 'europe', 'countries.eu': 'europe',
+        'asia': 'asia', 'asie': 'asia', 'countries.as': 'asia',
+        'north america': 'north_america', 'amerique du nord': 'north_america', 'amérique du nord': 'north_america', 'countries.na': 'north_america',
+        'south america': 'south_america', 'amerique du sud': 'south_america', 'amérique du sud': 'south_america', 'countries.sa': 'south_america',
+        'oceania': 'oceania', 'oceanie': 'oceania', 'océanie': 'oceania', 'countries.oc': 'oceania',
+        'antarctica': 'antarctica', 'antarctique': 'antarctica', 'countries.an': 'antarctica',
     };
     function norm(s: string) {
         return s

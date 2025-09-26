@@ -36,6 +36,7 @@ export interface Tech {
 export interface Country {
     id: string;
     name: string;
+    continent?: string;
     pollutants: Pollutants;
     coords: { x: number; y: number };
     population: number;

@@ -908,6 +908,9 @@ const Game: React.FC = () => {
     }, [gameState, addToLog]);
 
     const selectedCountry = gameState.countries.find(c => c.id === gameState.selectedCountryId) || null;
+    const isContinent = selectedCountry && selectedCountry.id.length === 2;
+    const selectedRegion = isContinent ? selectedCountry.name : null;
+
 
     if (!ready) {
         return <InitializationLoader progress={0} message="Loading..."/>;
@@ -941,7 +944,7 @@ const Game: React.FC = () => {
                                   selectedCountryId={gameState.selectedCountryId}
                                   onSelectCountry={handleCountrySelect}/>
                     </div>
-                    <InfoPanels gameState={gameState} selectedCountry={selectedCountry} />
+                    <InfoPanels gameState={gameState} selectedCountry={selectedCountry} selectedRegion={selectedRegion} />
                 </div>
                 <div className="lg:col-span-1 flex flex-col gap-4 lg:min-h-0">
                     <ActionsPanel
