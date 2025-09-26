@@ -59,6 +59,7 @@ export const createInitialState = (
 
     return {
       ...c,
+      continent: c.name, // Self-reference for filtering
       instability,
       // Champs santé — valeurs par défaut si absents
       healthCrisisLevel: c.healthCrisisLevel ?? 0,
